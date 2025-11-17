@@ -1,0 +1,21 @@
+{
+  "name": "population",
+  "version": "1.0.0",
+  "description": "A front-end project following best practices for HTML, CSS, and JavaScript",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "keywords": [
+    "frontend",
+    "javascript",
+    "html",
+    "css"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}
+

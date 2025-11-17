@@ -1,0 +1,27 @@
+# Python scripts (not needed for deployment)
+*.py
+__pycache__/
+*.pyc
+
+# CSV files (data is already in Supabase)
+*.csv
+
+# Development files
+.git/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node modules (will be installed by Vercel if needed)
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+

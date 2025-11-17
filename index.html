@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서울시 생활인구 조회</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+    <header class="layout-header">
+        <h1>서울시 생활인구 조회</h1>
+    </header>
+    
+    <main class="main-content">
+        <section class="content-section">
+            <form class="search-form" id="searchForm">
+                <div class="form-group">
+                    <label for="districtCode">행정동코드</label>
+                    <input 
+                        type="text" 
+                        id="districtCode" 
+                        name="districtCode" 
+                        placeholder="예: 1111061500, 1114055000, 1144066000, 1168064000, 1171056600"
+                        required
+                        aria-required="true"
+                    >
+                    <small class="form-hint">사용 가능한 코드: 1111061500, 1114055000, 1144066000, 1168064000, 1171056600</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="date">날짜</label>
+                    <input 
+                        type="date" 
+                        id="date" 
+                        name="date" 
+                        min="2023-01-01"
+                        max="2023-12-31"
+                        required
+                        aria-required="true"
+                    >
+                    <small class="form-hint">2023년 데이터만 조회 가능합니다</small>
+                </div>
+                
+                <button type="submit" class="btn-primary">조회</button>
+            </form>
+            
+            <div class="alert-message" id="alertMessage" role="alert" aria-live="polite"></div>
+            
+            <div class="chart-container">
+                <canvas id="populationChart"></canvas>
+            </div>
+        </section>
+    </main>
+    
+    <script src="script.js"></script>
+</body>
+</html>
+
