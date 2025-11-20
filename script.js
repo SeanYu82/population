@@ -1,6 +1,12 @@
-// Supabase configuration
-const SUPABASE_URL = 'https://gkklkjoatvbxfekuyvnx.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdra2xram9hdHZieGZla3V5dm54Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMzNjAzMTgsImV4cCI6MjA3ODkzNjMxOH0.UNVFvR7yOTe1pmowWa4s6LPuj4FOZTo85mCwRCBAzHE';
+// Supabase configuration - loaded from config.js
+// Make sure config.js exists (copy from config.example.js)
+if (typeof SUPABASE_CONFIG === 'undefined') {
+    console.error('SUPABASE_CONFIG is not defined. Please ensure config.js is loaded before script.js');
+    throw new Error('Supabase configuration is missing. Please create config.js from config.example.js');
+}
+
+const SUPABASE_URL = SUPABASE_CONFIG.SUPABASE_URL;
+const SUPABASE_ANON_KEY = SUPABASE_CONFIG.SUPABASE_ANON_KEY;
 
 // Initialize Supabase client
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);

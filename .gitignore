@@ -29,3 +29,6 @@ __pycache__/
 # Vercel
 .vercel
 
+# Configuration files with sensitive data
+config.js
+
