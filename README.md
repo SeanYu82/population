@@ -119,6 +119,32 @@ CREATE TABLE seoul_population (
 );
 ```
 
+## 환경 변수 설정
+
+이 프로젝트는 Supabase 키를 환경 변수로 관리합니다.
+
+### 로컬 개발
+
+로컬 개발을 위해서는 `config.js` 파일을 생성해야 합니다:
+
+1. `config.example.js`를 복사하여 `config.js` 생성:
+   ```bash
+   cp config.example.js config.js
+   ```
+
+2. `config.js` 파일을 열어 실제 Supabase URL과 Anon Key를 입력하세요.
+
+### Vercel 배포
+
+Vercel에 배포할 때는 환경 변수를 설정해야 합니다:
+
+1. Vercel 대시보드 → 프로젝트 → Settings → Environment Variables
+2. 다음 환경 변수 추가:
+   - `SUPABASE_URL`: Supabase 프로젝트 URL (예: `https://gkklkjoatvbxfekuyvnx.supabase.co`)
+   - `SUPABASE_ANON_KEY`: Supabase Anon Key
+
+빌드 시 환경 변수로부터 `config.js` 파일이 자동 생성됩니다.
+
 ## 배포
 
 이 프로젝트는 Vercel에 배포할 수 있습니다. 자세한 배포 가이드는 [DEPLOY.md](./DEPLOY.md)를 참고하세요.
@@ -138,6 +164,7 @@ CREATE TABLE seoul_population (
    - [Vercel 대시보드](https://vercel.com/dashboard)에서 프로젝트 Import
    - Git 저장소 연결
    - Framework Preset: "Other" 선택
+   - **환경 변수 설정** (위의 "환경 변수 설정" 섹션 참고)
    - Deploy 클릭
 
 자세한 내용은 [DEPLOY.md](./DEPLOY.md)를 참고하세요.

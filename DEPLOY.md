@@ -30,11 +30,12 @@
 4. 프로젝트 설정:
    - **Framework Preset**: Other
    - **Root Directory**: `./` (기본값)
-   - **Build Command**: (비워두기 - 정적 사이트이므로 빌드 불필요)
+   - **Build Command**: `npm run build` (자동으로 설정됨)
    - **Output Directory**: `./` (기본값)
    - **Install Command**: (비워두기)
-5. "Deploy" 버튼 클릭
-6. 배포 완료 후 제공되는 URL로 접속
+5. **환경 변수 설정** (아래 "환경 변수 설정" 섹션 참고)
+6. "Deploy" 버튼 클릭
+7. 배포 완료 후 제공되는 URL로 접속
 
 ### 방법 2: Vercel CLI 사용
 
@@ -58,19 +59,46 @@
    vercel --prod
    ```
 
-## 환경 변수 설정 (필요시)
+## 환경 변수 설정 (필수)
 
-현재 프로젝트는 Supabase URL과 API 키가 코드에 하드코딩되어 있습니다. 보안을 위해 환경 변수로 관리하는 것을 권장합니다:
+이 프로젝트는 Supabase 키를 환경 변수로 관리합니다. **배포 전에 반드시 환경 변수를 설정해야 합니다.**
 
-1. Vercel 대시보드 → 프로젝트 → Settings → Environment Variables
-2. 다음 환경 변수 추가:
-   - `VITE_SUPABASE_URL` (또는 `NEXT_PUBLIC_SUPABASE_URL`)
-   - `VITE_SUPABASE_ANON_KEY` (또는 `NEXT_PUBLIC_SUPABASE_ANON_KEY`)
+### Vercel 환경 변수 설정 방법
 
-그 후 `script.js`에서 환경 변수를 사용하도록 수정:
-```javascript
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://gkklkjoatvbxfekuyvnx.supabase.co';
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'your-key-here';
+1. **Vercel 대시보드 접속**
+   - 프로젝트 선택 → Settings → Environment Variables
+
+2. **환경 변수 추가**
+   다음 두 개의 환경 변수를 추가하세요:
+   
+   | 변수 이름 | 값 예시 | 설명 |
+   |---------|--------|------|
+   | `SUPABASE_URL` | `https://gkklkjoatvbxfekuyvnx.supabase.co` | Supabase 프로젝트 URL |
+   | `SUPABASE_ANON_KEY` | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...` | Supabase Anon Key |
+   
+   - **Environment**: Production, Preview, Development 모두 선택 (또는 필요에 따라 선택)
+   - "Save" 클릭
+
+3. **Supabase 키 확인 방법**
+   - [Supabase 대시보드](https://supabase.com/dashboard) 접속
+   - 프로젝트 선택 → Settings → API
+   - "Project URL"과 "anon public" 키를 복사
+
+### 빌드 프로세스
+
+빌드 시 `build-config.js` 스크립트가 실행되어:
+- 환경 변수로부터 `config.js` 파일을 자동 생성
+- 생성된 `config.js`는 배포에 포함됨
+
+### 로컬 개발
+
+로컬 개발을 위해서는 `config.js` 파일을 수동으로 생성해야 합니다:
+
+```bash
+# config.example.js를 복사
+cp config.example.js config.js
+
+# config.js 파일을 열어 실제 값 입력
 ```
 
 ## 커스텀 도메인 설정
@@ -90,8 +118,25 @@ Git 저장소와 연결하면:
 ### 배포 실패 시
 
 1. **빌드 로그 확인**: Vercel 대시보드에서 배포 로그 확인
-2. **로컬 테스트**: `npm start`로 로컬에서 정상 작동 확인
-3. **파일 확인**: 모든 필요한 파일이 Git에 포함되어 있는지 확인
+2. **환경 변수 확인**: `SUPABASE_URL`과 `SUPABASE_ANON_KEY`가 올바르게 설정되었는지 확인
+3. **로컬 테스트**: `npm run build`로 빌드가 성공하는지 확인
+4. **파일 확인**: 모든 필요한 파일이 Git에 포함되어 있는지 확인
+
+### Supabase 키를 인식하지 못하는 경우
+
+다음 사항을 확인하세요:
+
+1. **환경 변수 설정 확인**
+   - Vercel 대시보드 → Settings → Environment Variables
+   - `SUPABASE_URL`과 `SUPABASE_ANON_KEY`가 올바르게 설정되었는지 확인
+   - 환경 변수 이름이 정확한지 확인 (대소문자 구분)
+
+2. **빌드 로그 확인**
+   - Vercel 배포 로그에서 `build-config.js` 실행 여부 확인
+   - "✓ config.js generated successfully" 메시지 확인
+
+3. **재배포**
+   - 환경 변수 설정 후 "Redeploy" 클릭하여 재배포
 
 ### CORS 오류
 
